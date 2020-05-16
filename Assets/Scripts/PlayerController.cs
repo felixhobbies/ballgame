@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
 
     private Rigidbody rb;
+    public int acceptableNumber;
 
     void Start()
     {
@@ -28,7 +29,16 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("pickup"))
         {
-            other.gameObject.SetActive(false);
+            if (acceptableNumber == other.GetComponent<PupObject>().Number)
+            {
+                other.gameObject.SetActive(false);
+                acceptableNumber++;
+            }
+            else
+            {
+                Vector3 relationalVector = transform.position - other.transform.position;
+                rb.AddForce(relationalVector);
+            }
         }
     }
 }
